@@ -27,7 +27,7 @@ Note that the genivi_swm is currently an externalsrc recipe, so from the root of
 
 Also of interest, the rvi recipe is of the AUTOREV type, so it always gets the latest changes.
 
-[//]: # (TODO: ADD LINK TO IMAGE HERE)
+A prebuilt image can be found here: https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp/genivi-dev-platform-qemux86-64.ext4
 
 # Software Loading Manager
 

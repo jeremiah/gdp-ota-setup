@@ -27,6 +27,8 @@ Note that the genivi_swm is currently an externalsrc recipe, so from the root of
 
 Also of interest, the rvi recipe is of the AUTOREV type, so it always gets the latest changes.
 
+[//]: # (TODO: ADD LINK TO IMAGE HERE)
+
 # Software Loading Manager
 
 ## Repo
@@ -41,6 +43,13 @@ This is the fork of the genivi_swm, with changes to let it run on yocto. The for
 - start image with `./run-qemu-net genivi-dev-platform`
 - ssh into it with `ssh root@127.0.0.1 -p 2223`, the password is `root`
 - kill rvi with `systemctl stop rvi`
+- edit `/etc/opt/rvi/device_id` and `/etc/sota.toml` to add your device on from http://sota.genivi.org:9000/
 - start rvi with `RVI_MYIP=$(/sbin/ip route | /usr/bin/awk '/default/ { print $3 }') RVI_PORT=8900 RVI_BACKEND=38.101.164.230 CONFIG=/etc/opt/rvi/rvi.config RVI_BACKEND=38.101.164.230 /opt/rvi_core/rvi_ctl -c /etc/opt/rvi/rvi.config console`
 - restart sota client with `systemctl restart sota_client`
 - start swm with `cd /usr/lib/genivi-swm/ && ./start-yocto.sh`
+
+# Current status
+
+With those manual steps above you can connect a GDP image to sota.genivi.org, a vehicle/package/campaign can be created. The campaign gets as far as the sota-client, and from there there is an issue connecting to genivi-swm over dbus.
+
+The genivi-swm uses the library [storm](https://pypi.python.org/pypi/storm) and falls over without it, so it could be related to that.

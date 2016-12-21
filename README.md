@@ -7,15 +7,16 @@
 https://github.com/advancedtelematic/infra-cookbooks
 
 Cookbook: gdp
+
 Role: gdp
 
 # GDP Image
 
 ## Repo
 
-git@github.com:advancedtelematic/meta-genivi-dev.git, branch: feat/add-swm
+https://github.com/advancedtelematic/meta-genivi-dev, branch: feat/add-swm
 
-To build, follow the instructions [here](https://github.com/advancedtelematic/meta-genivi-dev#building-the-genivi-development-platform-gdp), making sure that the `meta-genivi-dev` layer is set on the branch `feat/add-swm`.
+To build, follow the instructions [here](https://github.com/advancedtelematic/meta-genivi-dev#building-the-genivi-development-platform-gdp), making sure that the `meta-genivi-dev` layer is on the branch `feat/add-swm`.
 
 # Software Loading Manager
 

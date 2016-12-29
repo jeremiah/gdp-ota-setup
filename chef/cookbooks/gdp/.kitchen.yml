@@ -1,0 +1,27 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: debian-jessie
+    driver:
+      box: debian-jessie
+      box_url: https://github.com/holms/vagrant-jessie-box/releases/download/Jessie-v0.1/Debian-jessie-amd64-netboot.box
+
+suites:
+  - name: gdp
+    roles_path: test/integration/roles
+    run_list:
+      - recipe[gdp]
+      - recipe[gdp::letsencrypt]
+    attributes:
+      gdp:
+        user: vagrant
+      authorization:
+        sudo:
+          users:
+            - vagrant
+            - gdp

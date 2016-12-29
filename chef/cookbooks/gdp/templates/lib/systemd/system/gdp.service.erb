@@ -1,0 +1,12 @@
+[Unit]
+Description=My Server container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> up
+ExecStop=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> down
+
+[Install]
+WantedBy=local.target

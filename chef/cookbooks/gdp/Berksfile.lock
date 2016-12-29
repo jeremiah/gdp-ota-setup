@@ -1,0 +1,11 @@
+DEPENDENCIES
+  gdp
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.9.2)
+  gdp (1.0.0)
+    apt (~> 2.9.2)
+    sudo (~> 2.9.0)
+  sudo (2.9.0)

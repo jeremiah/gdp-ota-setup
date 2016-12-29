@@ -2,13 +2,9 @@
 
 # Deployment
 
-## Repo
+Deployment is done using [Chef](https://docs.chef.io/).
 
-https://github.com/advancedtelematic/infra-cookbooks
-
-Cookbook: gdp
-
-Role: gdp
+The cookbook is at `chef/cookbooks/gdp`, and the role is in `chef/roles/gdp.rb`.
 
 # GDP Image
 

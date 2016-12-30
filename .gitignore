@@ -1,0 +1,4 @@
+*.pem
+chef/.chef/knife.rb
+chef/.chef/syntaxcache
+.kitchen/

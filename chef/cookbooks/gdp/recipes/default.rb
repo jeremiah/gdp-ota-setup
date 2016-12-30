@@ -90,6 +90,7 @@ cookbook_file gdp_env_file do
   user 'root'
   group 'root'
   mode '700'
+  not_if { ::File.exists?(gdp_env_file)}
 end
 
 # Start service

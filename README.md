@@ -23,7 +23,7 @@ You'll need to make sure a few layers are at different branches:
 
 Also of interest, the rvi recipe is of the AUTOREV type, so it always gets the latest changes.
 
-A prebuilt image can be found here: https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp/genivi-dev-platform-qemux86-64.ext4
+A prebuilt image can be found here: https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp
 
 # Software Loading Manager
 

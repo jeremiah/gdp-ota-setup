@@ -1,0 +1,3 @@
+LDAP_HOST=ldapserver
+AUTHN_BASE_DN=ou=users,dc=genivi,dc=org
+LDAP_PASSWORD=admin

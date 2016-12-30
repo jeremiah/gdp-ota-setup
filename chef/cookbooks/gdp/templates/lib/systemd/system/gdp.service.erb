@@ -5,8 +5,9 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> up
-ExecStop=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> down
+EnvironmentFile=<%=@gdp_env_file%>
+ExecStart=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> -f <%=@webserver_compose_file%> up
+ExecStop=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> -f <%=@webserver_compose_file%> down
 
 [Install]
 WantedBy=local.target

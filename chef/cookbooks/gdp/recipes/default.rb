@@ -45,6 +45,8 @@ user = node[:gdp][:user]
 home_dir = "/home/#{user}"
 compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/docker-compose.yml"
 rvi_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/core-rvi.yml"
+webserver_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/webserver-overrides.yml"
+gdp_env_file = '/etc/gdp-environment'
 additional_groups = node[:gdp][:additional_groups]
 
 additional_groups.each do |grp|
@@ -63,12 +65,30 @@ git "#{home_dir}/rvi_sota_server" do
   user user
 end
 
+# add docker-compose ldap overrides
+cookbook_file "#{webserver_compose_file}" do
+  source 'webserver-overrides.yml'
+  user user
+  group user
+  mode '700'
+end
+
 template '/lib/systemd/system/gdp.service' do
   source 'lib/systemd/system/gdp.service.erb'
   variables({
     compose_file: compose_file,
-    rvi_compose_file: rvi_compose_file
+    rvi_compose_file: rvi_compose_file,
+    webserver_compose_file: webserver_compose_file,
+    gdp_env_file: gdp_env_file
   })
+  mode '700'
+end
+
+# add ldap env vars example
+cookbook_file gdp_env_file do
+  source 'gdp-environment'
+  user 'root'
+  group 'root'
   mode '700'
 end
 

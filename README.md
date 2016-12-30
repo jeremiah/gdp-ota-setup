@@ -6,20 +6,20 @@ Deployment is done using [Chef](https://docs.chef.io/).
 
 The cookbook is at `chef/cookbooks/gdp`, and the role is in `chef/roles/gdp.rb`.
 
+Instructions on some basic chef commands are in the file `chef/cookbooks/gdp/README.md`
+
 # GDP Image
 
 ## Repo
 
-https://github.com/advancedtelematic/meta-genivi-dev, branch: feat/add-swm
+https://github.com/advancedtelematic/meta-genivi-dev, branch: genivi-challenge
 
 To build, follow the instructions [here](https://github.com/advancedtelematic/meta-genivi-dev#building-the-genivi-development-platform-gdp)
 
 You'll need to make sure a few layers are at different branches:
 
-- `meta-genivi-dev` layer is on the branch `feat/add-swm` from the ats fork.
+- `meta-genivi-dev` layer is on the branch `genivi-challenge` from the ats fork.
 - `meta-rust` is on the latest from https://github.com/meta-rust/meta-rust
-
-Note that the genivi_swm is currently an externalsrc recipe, so from the root of the meta-genivi-dev dir in the genivi-dev-platform dir, you should be able to run `ls meta-genivi-dev/recipes-sota/genivi-swm/../../../../../../../work/genivi_swm` to find the dir (it makes sense on my machine, promise)
 
 Also of interest, the rvi recipe is of the AUTOREV type, so it always gets the latest changes.
 
@@ -29,7 +29,7 @@ A prebuilt image can be found here: https://s3.eu-central-1.amazonaws.com/openiv
 
 ## Repo
 
-https://github.com/advancedtelematic/genivi_swm, branch: feat/remove-gtk
+https://github.com/advancedtelematic/genivi_swm, branch: genivi-challenge
 
 This is the fork of the genivi_swm, with changes to let it run on yocto. The forked meta-genivi-dev repo above pulls from here.
 
@@ -38,14 +38,23 @@ This is the fork of the genivi_swm, with changes to let it run on yocto. The for
 - copy the `run-qemu-net` script from this repo to your bitbake build dir (something like `genivi-dev-platform/gdp-src-build`)
 - start image with `./run-qemu-net genivi-dev-platform`
 - ssh into it with `ssh root@127.0.0.1 -p 2223`, the password is `root`
-- kill rvi with `systemctl stop rvi`
-- edit `/etc/opt/rvi/device_id` and `/etc/sota.toml` to add your device on from http://sota.genivi.org:9000/
-- start rvi with `RVI_MYIP=$(/sbin/ip route | /usr/bin/awk '/default/ { print $3 }') RVI_PORT=8900 RVI_BACKEND=38.101.164.230 CONFIG=/etc/opt/rvi/rvi.config RVI_BACKEND=38.101.164.230 /opt/rvi_core/rvi_ctl -c /etc/opt/rvi/rvi.config console`
-- restart sota client with `systemctl restart sota_client`
 - start swm with `cd /usr/lib/genivi-swm/ && ./start-yocto.sh`
 
 # Current status
 
-With those manual steps above you can connect a GDP image to sota.genivi.org, a vehicle/package/campaign can be created. The campaign gets as far as the sota-client, and from there there is an issue connecting to genivi-swm over dbus.
+The admin interface is available at https://sota.genivi.org
 
-The genivi-swm uses the library [storm](https://pypi.python.org/pypi/storm) and falls over without it, so it could be related to that.
+The LDAP integration is complete but not tested. In theory you can log in with internal Genivi LDAP credentials (different to Genivi Crowd credentials), but I haven't been able to test that as I don't have test credentials yet (they are in progress).
+
+And on the server side, you can ssh in and run `docker ps` to see what services are up, and `docker logs` to see their logs.
+
+On the GDP image you can check if rvi and sota_client are running using `systemctl`:
+
+```
+systemctl status rvi
+systemctl status sota_client
+```
+
+The image is configued with the UUID of a test vehicle on https://sota.genivi.org. You can create a campaign for a package and send it to that vehicle. `sota_client` on the GDP image receives the campaign, but currently fails to install it.
+
+The campaign gets as far as the sota-client, and from there there is an issue connecting to genivi-swm over dbus. I believe it is failing to communicate to the genivi-swm over dbus. The genivi-swm has a dependency the library [storm](https://pypi.python.org/pypi/storm) and falls over without it, so it probably doesn't have the necessary dbus interfaces. Currently working on how to solve this also.

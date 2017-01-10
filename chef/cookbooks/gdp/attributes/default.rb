@@ -1,5 +1,6 @@
 default[:gdp][:user] = "at"
 default[:gdp][:additional_groups] = %w(docker root)
+default[:gdp][:data_dir] = '/opt/gdp/data'
 
 default[:gdp][:letsencrypt][:config_path] = "/etc/letsencrypt/configs/"
 default[:gdp][:letsencrypt][:bin_path] = "/opt/letsencrypt/certbot-auto"

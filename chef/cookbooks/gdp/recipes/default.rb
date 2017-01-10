@@ -43,9 +43,11 @@ end
 
 user = node[:gdp][:user]
 home_dir = "/home/#{user}"
+data_dir = node[:gdp][:data_dir]
 compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/docker-compose.yml"
 rvi_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/core-rvi.yml"
 webserver_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/webserver-overrides.yml"
+mariadb_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/mariadb-volume.yml"
 gdp_env_file = '/etc/gdp-environment'
 additional_groups = node[:gdp][:additional_groups]
 
@@ -79,6 +81,7 @@ template '/lib/systemd/system/gdp.service' do
     compose_file: compose_file,
     rvi_compose_file: rvi_compose_file,
     webserver_compose_file: webserver_compose_file,
+    mariadb_compose_file: mariadb_compose_file,
     gdp_env_file: gdp_env_file
   })
   mode '700'
@@ -91,6 +94,23 @@ cookbook_file gdp_env_file do
   group 'root'
   mode '700'
   not_if { ::File.exists?(gdp_env_file)}
+end
+
+# add mariadb volume
+template mariadb_compose_file do
+  source 'mariadb-volume.yml.erb'
+  variables({
+    data_dir: data_dir
+  })
+  mode '700'
+end
+
+directory data_dir do
+  owner user
+  group user
+  recursive true
+  mode '0755'
+  action :create
 end
 
 # Start service

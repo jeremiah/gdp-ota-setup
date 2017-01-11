@@ -1,0 +1,27 @@
+echo
+echo Running image $1
+echo
+echo If this hangs, unplug and replug the wifi dongle
+
+# 0cf3:9271 - TP-Link TL-WN72N AR9271 WiFi
+# 0a12:0001 - CSR Bluetooth dongle
+# 054c:06c1 - Sony RC-S380 NFC Reader
+# 067b:2303 - GPS Mouse
+
+IMAGE=$1
+KERNEL=$2
+MAC=52:54:00:12:31:68
+
+sudo qemu-system-x86_64 \
+  -kernel $KERNEL \
+  -append root=/dev/vda \
+  -drive file=$IMAGE,if=virtio,format=raw \
+  -snapshot \
+	-m 1G \
+	-usb \
+	-usbdevice tablet \
+	-show-cursor \
+	-vga std \
+	-net user,hostfwd=tcp:127.0.0.1:2223-:22,restrict=off \
+	-net nic,macaddr=$MAC,model=virtio \
+	-cpu Haswell

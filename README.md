@@ -8,11 +8,13 @@ The cookbook is at `chef/cookbooks/gdp`, and the role is in `chef/roles/gdp.rb`.
 
 Instructions on some basic chef commands are in the file `chef/cookbooks/gdp/README.md`
 
-# GDP Image
+# Building The GDP Image
 
-## Repo
+The changes to the GDP image are in the `recipes-sota` dir of a forked meta-genivi-dev layer.
 
-https://github.com/advancedtelematic/meta-genivi-dev, branch: genivi-challenge
+It can be found here:
+
+https://github.com/advancedtelematic/meta-genivi-dev, branch: gdp-challenge
 
 To build, follow the instructions [here](https://github.com/advancedtelematic/meta-genivi-dev#building-the-genivi-development-platform-gdp)
 
@@ -21,29 +23,47 @@ You'll need to make sure a few layers are at different branches:
 - `meta-genivi-dev` layer is on the branch `genivi-challenge` from the ats fork.
 - `meta-rust` is on the commit `4eb46035c535dd6fc1626d08757ddfb72eb796f2` from https://github.com/meta-rust/meta-rust 
 
-A prebuilt image can be found here: https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp
+When that is set up, you can use `bitbake genivi-dev-platform` as per the afore mentioned instructions to build the image.
 
 # Software Loading Manager
 
-## Repo
+Several changes were made to the Software Loading Manager so that it would run on GDP. They can be found here:
 
 https://github.com/advancedtelematic/genivi_swm, branch: genivi-challenge
 
-This is the fork of the genivi_swm, with changes to let it run on yocto. The forked meta-genivi-dev repo above pulls from here.
+# Starting the GDP image
 
-# Sample install package
+You have two options: you can build an image from source, or use a prebuilt image.
 
-From the genivi_swm project run:
+Let's take them one at a time:
+
+## from source
+
+First, follow the above instructions above at the heading Building The GDP Image.
+
+When you have a successful build, copy the `run-qemu-net-source` script from this repo to your `gdp-src-build` directory
+
+Then start the image with `run-qemu-net-prebuilt genivi-dev-platform`
+
+## using the prebuilt image
+
+First up, download the prebuilt image and its kernal. Assuming you have HTTPie installed, you can run the following:
+
 ```
-sh create_update_image.sh -d libats -o libats.upd
+http https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp-11-01-2016-r1.ext4 -d
+http https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp-11-01-2016.bzImage -d
 ```
 
-The rpm package inside that was created with the command `bitbake libats` from the `gdp-src-build` dir. It is created from the recipe at `meta-genivi-dev/meta-genivi-dev/recipes-sota/libats`.
+Then you can start it with the following command:
+
+```
+./run-qemu-net-prebuilt gdp-11-01-2016-r1.ext4 gdp-11-01-2016.bzImage
+```
 
 # End to end test
 
 - go to https://sota.genivi.org
-- log in with you GENIVI ldap credentials
+- log in with your GENIVI ldap credentials
 - click 'Vehicles' on the left column to go to https://sota.genivi.org/#/vehicles
 - click 'NEW VIN', enter a name, and click 'Add Vehicle'
 - click on the newly created vehicle from the list below
@@ -51,11 +71,12 @@ The rpm package inside that was created with the command `bitbake libats` from t
 - now, IF you are building from source, you'll need to add the uuid to the following files
   - `meta-genivi-dev/recipes-sota/rvi/device_id`, update so it is `genivi.org/device/YOUR_UUID`
   - `meta-genivi-dev/recipes-sota/sota-client-append/sota.toml`, update the field `uuid = "YOUR_UUID"`
-  - build the image by running `bitbake genivi-dev-platform` from your `gdp-src-build` directory
-  - copy the `run-qemu-net` script from this repo to your `gdp-src-build` directory
-  - start image with `./run-qemu-net genivi-dev-platform`
+  - rebuild the image by running `bitbake genivi-dev-platform` from your `gdp-src-build` directory
+  - start image as per the instructions above
 - ssh into it with `ssh root@127.0.0.1 -p 2223`, the password is `root`
-- IF you didn't build from source with uuid added, you'll have to edit two files:
+- IF you didn't build from source with uuid added:
+  - start the prebuilt image as per the instructions above
+  - you'll have to edit two files
   - `/etc/opt/rvi/device_id`, update so it is `genivi.org/device/YOUR_UUID`
   - `/etc/sota.toml`, update the field `uuid = "YOUR_UUID"`
   - run the command `systemctl restart rvi sota_client` (it takes about a minute)
@@ -64,7 +85,7 @@ The rpm package inside that was created with the command `bitbake libats` from t
 - check the logs of both `journalctl -fu sota_client -u software_loading_manager`, and keep this running.
 - back on https://sota.genivi.org click 'Packages' on the left column
 - click 'NEW PACKAGE'
-- fill in the form with 'package name'=`libats`, 'version'=`2.0.0`, and as the Package Binary choose `libats.upd` from the genivi_swm repo.
+- fill in the form with 'package name'=`libats`, 'version'=`2.0.0`, and as the Package Binary choose `libats.upd` from the genivi_swm repo. (More info on this package below under the heading 'Sample install package')
 - click 'Add PACKAGE' to create the package
 - click packages on the left column
 - click 'Create Campaign' from the row of the package 'libats 2.0.0'
@@ -80,3 +101,13 @@ VERSION=2.0.0
 ```
 
 - a package was successfully installed!
+
+
+# Sample install package
+
+From the genivi_swm project run:
+```
+sh create_update_image.sh -d libats -o libats.upd
+```
+
+The rpm package inside that was created with the command `bitbake libats` from the `gdp-src-build` dir. It is created from the recipe at `meta-genivi-dev/meta-genivi-dev/recipes-sota/libats`.

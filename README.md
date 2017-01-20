@@ -20,7 +20,7 @@ To build, follow the instructions [here](https://github.com/advancedtelematic/me
 
 You'll need to make sure a few layers are at different branches:
 
-- `meta-genivi-dev` layer is on the branch `genivi-challenge` from the ats fork.
+- `meta-genivi-dev` layer is on the branch `gdp-challenge` from the ats fork.
 - `meta-rust` is on the commit `4eb46035c535dd6fc1626d08757ddfb72eb796f2` from https://github.com/meta-rust/meta-rust 
 
 When that is set up, you can use `bitbake genivi-dev-platform` as per the afore mentioned instructions to build the image.

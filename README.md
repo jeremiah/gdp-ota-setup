@@ -43,7 +43,7 @@ First, follow the above instructions above at the heading Building The GDP Image
 
 When you have a successful build, copy the `run-qemu-net-source` script from this repo to your `gdp-src-build` directory
 
-Then start the image with `run-qemu-net-prebuilt genivi-dev-platform`
+Then start the image with `./run-qemu-net-source genivi-dev-platform`
 
 ## using the prebuilt image
 

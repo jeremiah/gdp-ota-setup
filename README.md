@@ -29,7 +29,7 @@ When that is set up, you can use `bitbake genivi-dev-platform` as per the afore 
 
 Several changes were made to the Software Loading Manager so that it would run on GDP. They can be found here:
 
-https://github.com/advancedtelematic/genivi_swm, branch: genivi-challenge
+https://github.com/advancedtelematic/genivi_swm, branch: gdp-build
 
 # Starting the GDP image
 

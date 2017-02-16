@@ -41,12 +41,14 @@ file node['docker-compose'][:path] do
   mode '777'
 end
 
+sota_version = "0.2.56"
 user = node[:gdp][:user]
 home_dir = "/home/#{user}"
 data_dir = node[:gdp][:data_dir]
 compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/docker-compose.yml"
 rvi_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/core-rvi.yml"
 webserver_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/webserver-overrides.yml"
+version_tags_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/version-tag-overrides.yml"
 mariadb_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/mariadb-volume.yml"
 gdp_env_file = '/etc/gdp-environment'
 additional_groups = node[:gdp][:additional_groups]
@@ -62,7 +64,7 @@ end
 # Add rvi sota server
 git "#{home_dir}/rvi_sota_server" do
   repository 'https://github.com/advancedtelematic/rvi_sota_server.git'
-  revision 'master'
+  revision "v" + "#{sota_version}"
   action :sync
   user user
 end
@@ -101,6 +103,15 @@ template mariadb_compose_file do
   source 'mariadb-volume.yml.erb'
   variables({
     data_dir: data_dir
+  })
+  mode '700'
+end
+
+# add version tags
+template version_tags_compose_file do
+  source 'version-tag-overrides.yml.erb'
+  variables({
+    sota_version: sota_version
   })
   mode '700'
 end

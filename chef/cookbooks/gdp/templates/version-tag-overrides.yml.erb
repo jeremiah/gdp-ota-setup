@@ -1,0 +1,18 @@
+version: '2'
+services:
+
+  device-registry:
+    image: advancedtelematic/sota-device_registry:<%=@sota_version%>
+
+  resolver:
+    image: advancedtelematic/sota-resolver:<%=@sota_version%>
+
+  core:
+    image: advancedtelematic/sota-core:<%=@sota_version%>
+
+  webserver:
+    image: advancedtelematic/sota-webserver:<%=@sota_version%>
+
+  rvi_backend:
+    image: advancedtelematic/rvi:0.5.1
+

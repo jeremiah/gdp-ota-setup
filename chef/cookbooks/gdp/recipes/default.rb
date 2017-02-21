@@ -84,6 +84,7 @@ template '/lib/systemd/system/gdp.service' do
     rvi_compose_file: rvi_compose_file,
     webserver_compose_file: webserver_compose_file,
     mariadb_compose_file: mariadb_compose_file,
+    version_tags_compose_file: version_tags_compose_file,
     gdp_env_file: gdp_env_file
   })
   mode '700'
@@ -126,5 +127,5 @@ end
 
 # Start service
 service 'gdp' do
-  action [:enable, :start]
+  action [:enable, :restart]
 end

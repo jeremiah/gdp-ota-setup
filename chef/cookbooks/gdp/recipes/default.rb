@@ -41,7 +41,7 @@ file node['docker-compose'][:path] do
   mode '777'
 end
 
-sota_version = "0.2.56"
+sota_version = node[:gdp][:sota_version]
 user = node[:gdp][:user]
 home_dir = "/home/#{user}"
 data_dir = node[:gdp][:data_dir]
@@ -64,7 +64,7 @@ end
 # Add rvi sota server
 git "#{home_dir}/rvi_sota_server" do
   repository 'https://github.com/advancedtelematic/rvi_sota_server.git'
-  revision "v" + "#{sota_version}"
+  revision "v#{sota_version}"
   action :sync
   user user
 end

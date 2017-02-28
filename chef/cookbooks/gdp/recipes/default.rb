@@ -50,6 +50,7 @@ rvi_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/core-rvi.y
 webserver_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/webserver-overrides.yml"
 version_tags_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/version-tag-overrides.yml"
 mariadb_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/mariadb-volume.yml"
+core_pkg_storage_compose_file = "#{home_dir}/rvi_sota_server/deploy/docker-compose/core-local-storage.yml"
 gdp_env_file = '/etc/gdp-environment'
 additional_groups = node[:gdp][:additional_groups]
 
@@ -85,7 +86,8 @@ template '/lib/systemd/system/gdp.service' do
     webserver_compose_file: webserver_compose_file,
     mariadb_compose_file: mariadb_compose_file,
     version_tags_compose_file: version_tags_compose_file,
-    gdp_env_file: gdp_env_file
+    gdp_env_file: gdp_env_file,
+    core_pkg_storage_compose_file: core_pkg_storage_compose_file
   })
   mode '700'
 end

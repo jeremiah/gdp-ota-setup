@@ -6,8 +6,8 @@ After=docker.service
 [Service]
 Restart=always
 EnvironmentFile=<%=@gdp_env_file%>
-ExecStart=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> -f <%=@webserver_compose_file%> -f <%=@version_tags_compose_file%> -f <%=@mariadb_compose_file%> up
-ExecStop=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> -f <%=@webserver_compose_file%> -f <%=@version_tags_compose_file%> -f <%=@mariadb_compose_file%> down
+ExecStart=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> -f <%=@webserver_compose_file%> -f <%=@version_tags_compose_file%> -f <%=@mariadb_compose_file%> -f <%=@core_pkg_storage_compose_file%> up
+ExecStop=/usr/local/bin/docker-compose -f <%=@compose_file%> -f <%=@rvi_compose_file%> -f <%=@webserver_compose_file%> -f <%=@version_tags_compose_file%> -f <%=@mariadb_compose_file%> -f <%=@core_pkg_storage_compose_file%> down
 
 [Install]
 WantedBy=local.target

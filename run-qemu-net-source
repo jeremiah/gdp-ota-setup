@@ -17,12 +17,13 @@ sudo qemu-system-x86_64 \
   -kernel $KERNEL \
   -append root=/dev/vda \
   -drive file=$IMAGE,if=virtio,format=raw \
-  -snapshot \
-	-m 1G \
-	-usb \
-	-usbdevice tablet \
-	-show-cursor \
-	-vga std \
-	-net user,hostfwd=tcp:127.0.0.1:2223-:22,restrict=off \
-	-net nic,macaddr=$MAC,model=virtio \
-	-cpu Haswell
+  -serial stdio \
+  -serial tcp:127.0.0.1:8990,server,nowait \
+  -m 1G \
+  -usb \
+  -usbdevice tablet \
+  -show-cursor \
+  -vga std \
+  -net user,hostfwd=tcp:127.0.0.1:2223-:22,restrict=off \
+  -net nic,macaddr=$MAC,model=virtio \
+  -cpu Haswell

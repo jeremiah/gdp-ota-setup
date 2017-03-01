@@ -6,7 +6,23 @@ Deployment is done using [Chef](https://docs.chef.io/).
 
 The cookbook is at `chef/cookbooks/gdp`, and the role is in `chef/roles/gdp.rb`.
 
-Instructions on some basic chef commands are in the file `chef/cookbooks/gdp/README.md`
+To deploy the genivi server, all you need to do is:
+
+```
+cd ~/gdp-ota-setup/chef
+./deploy.sh
+```
+
+If you need to provision a new server from scratch, do the following:
+
+- Clone this repo to the server: `git clone git@github.com:advancedtelematic/gdp-ota-setup.git --recursive`
+- `cd gdp-ota-setup/chef`
+- `./install.sh`
+- `./deploy.sh`
+
+# Configure LDAP
+
+The file files/gdp-environment with default local LDAP configurarion is written to /etc/gdp-   environment on the server. There the credentials must be added for the LDAP server.
 
 # Building The GDP Image
 

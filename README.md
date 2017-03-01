@@ -20,8 +20,7 @@ To build, follow the instructions [here](https://github.com/advancedtelematic/me
 
 You'll need to make sure a few layers are at different branches:
 
-- `meta-genivi-dev` layer is on the branch `gdp-challenge` from the ats fork.
-- `meta-rust` is on the commit `4eb46035c535dd6fc1626d08757ddfb72eb796f2` from https://github.com/meta-rust/meta-rust 
+- `meta-genivi-dev` layer is on the branch `gdp-integration` from the ats fork.
 
 When that is set up, you can use `bitbake genivi-dev-platform` as per the afore mentioned instructions to build the image.
 
@@ -37,7 +36,7 @@ You have two options: you can build an image from source, or use a prebuilt imag
 
 Let's take them one at a time:
 
-## from source
+## From source
 
 First, follow the above instructions above at the heading Building The GDP Image.
 
@@ -45,7 +44,9 @@ When you have a successful build, copy the `run-qemu-net-source` script from thi
 
 Then start the image with `./run-qemu-net-source genivi-dev-platform`
 
-## using the prebuilt image
+## Using the prebuilt image (broken)
+
+This is broken until we update these images with Aktualizr.
 
 First up, download the prebuilt image and its kernal. Assuming you have HTTPie installed, you can run the following:
 
@@ -57,7 +58,7 @@ http https://s3.eu-central-1.amazonaws.com/openivi-releases/gdp-11-01-2016.bzIma
 Then you can start it with the following command:
 
 ```
-./run-qemu-net-prebuilt gdp-11-01-2016-r1.ext4 gdp-11-01-2016.bzImage
+./run-qemu-net-prebuilt gdp-11-01-2016-r1.ext4 gdp-11-01-2016.bzImage # Broken
 ```
 
 # End to end test

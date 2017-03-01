@@ -1,30 +1,11 @@
 # GDP Sota Server
 
-## Bootstrap
+## dependencies
 
-```
-knife bootstrap sota.genivi.org --sudo -r 'role[gdp]' -x at -A
-```
+For chef-solo, the dependencies are checked out as submodules in the `chef/cookbooks` directory. Cloning the repo with the `--recursive` flag should give you the correct versions, but if for some reason it doesn't, you'll need the following:
 
-## Provision
-
-```
-knife ssh 'role:gdp' -x at -A 'sudo chef-client'
-```
-
-## Update cookbook
-
-```
-knife cookbook upload gdp
-```
-
-## Revoke credentials
-
-```
-knife ssh 'role:gdp' -x at -A 'sudo rm /etc/chef/*'
-knife node delete sota.genivi.org
-knife client delete sota.genivi.org
-```
+apt: 2.9.2 https://github.com/chef-cookbooks/apt/releases/tag/v2.9.2
+sudo: 2.9.0 https://github.com/chef-cookbooks/sudo/releases/tag/v2.9.0
 
 ## Configure LDAP
 

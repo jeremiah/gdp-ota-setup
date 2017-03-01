@@ -1,0 +1,6 @@
+[submodule "chef/cookbooks/apt"]
+	path = chef/cookbooks/apt
+	url = https://github.com/chef-cookbooks/apt.git
+[submodule "chef/cookbooks/sudo"]
+	path = chef/cookbooks/sudo
+	url = https://github.com/chef-cookbooks/sudo.git

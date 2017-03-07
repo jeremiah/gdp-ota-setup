@@ -110,6 +110,12 @@ template mariadb_compose_file do
   mode '700'
 end
 
+# WIP remove ports from yaml file
+# require 'yaml'
+# dc = YAML.load_file(compose_file)
+# newhash = {"version"=>"2","services"=>dc["services"].each {|k,v| v.delete("ports") if v.is_a? Hash }}
+# File.open(compose_file,'w') {|f| f.write {"version"=>"2","services"=>dc["services"].each {|k,v| v.delete("ports") if v.is_a? Hash }}.to_yaml}
+
 # add version tags
 template version_tags_compose_file do
   source 'version-tag-overrides.yml.erb'

@@ -1,0 +1,1 @@
+GENIVI-SOTA Step by Step Guide.adoc

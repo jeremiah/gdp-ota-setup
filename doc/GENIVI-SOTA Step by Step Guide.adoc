@@ -1,4 +1,4 @@
-= Over-the-air updates on the DENIVI Demo Platform
+= Over-the-air updates on the GENIVI Demo Platform
 :icons: font
 :toc: left
 :data-uri:

@@ -9,4 +9,4 @@ default[:docker][:version] = "1.12.3-0"
 
 default['docker-compose'][:version] = "1.8.1"
 default['docker-compose'][:path] = "/usr/local/bin/docker-compose"
-default[:gdp][:sota_version] = "0.2.83"
+default[:gdp][:sota_version] = "0.2.97"

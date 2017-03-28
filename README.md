@@ -1,4 +1,4 @@
-# Genivi Delivery
+# GENIVI Delivery
 
 # Deployment
 
